@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0c">
+  <title>待办</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div>
+        <h1 class="app-title">待办</h1>
+        <p class="app-date" id="date-label"></p>
+      </div>
+      <div class="app-count" id="count-label">0 项</div>
+    </header>
+
+    <div class="progress">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="progress-text" id="progress-text"></span>
+    </div>
+
+    <nav class="filters" id="filters" aria-label="分类筛选"></nav>
+
+    <form class="add-form" id="add-form" autocomplete="off">
+      <input type="text" class="add-input" id="add-input" placeholder="记点什么…" aria-label="新任务">
+      <div class="add-options">
+        <label class="field">
+          <span class="field-label">优先级</span>
+          <select id="add-priority" class="select">
+            <option value="none">无</option>
+            <option value="high">高</option>
+            <option value="medium">中</option>
+            <option value="low">低</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="field-label">截止</span>
+          <input type="date" id="add-date" class="select">
+        </label>
+        <label class="field">
+          <span class="field-label">分类</span>
+          <select id="add-category" class="select"></select>
+        </label>
+        <button type="submit" class="add-btn">添加</button>
+      </div>
+    </form>
+
+    <div class="sort-bar">
+      <span class="sort-label">排序</span>
+      <div class="sort-group" id="sort-group">
+        <button class="sort-btn active" data-sort="manual">手动</button>
+        <button class="sort-btn" data-sort="priority">优先级</button>
+        <button class="sort-btn" data-sort="due">截止日期</button>
+      </div>
+    </div>
+
+    <ul class="task-list" id="task-list"></ul>
+
+    <button class="clear-btn" id="clear-done">清除已完成</button>
+
+    <div class="empty" id="empty">
+      <span class="empty-mark">✓</span>
+      <p>空空如也，先记一件小事吧</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
