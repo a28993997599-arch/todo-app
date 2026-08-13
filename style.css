@@ -37,6 +37,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* 动态氛围光 */
@@ -116,7 +117,6 @@ body::after {
 /* 分类筛选 */
 .filters {
   display: flex;
-  gap: 8px;
   margin-bottom: 16px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -126,6 +126,7 @@ body::after {
 
 .filter {
   flex: none;
+  margin-right: 8px;
   padding: 7px 14px;
   font-size: 13px;
   color: var(--text-secondary);
@@ -167,7 +168,6 @@ body::after {
 .add-options {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
   align-items: flex-end;
   padding-top: 10px;
   border-top: 1px solid var(--border);
@@ -176,18 +176,23 @@ body::after {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   flex: 1;
   min-width: 88px;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 .field-label {
   font-size: 11px;
   color: var(--text-muted);
   letter-spacing: 0.05em;
+  margin-bottom: 4px;
 }
 
 .select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 8px 8px;
   font-size: 13px;
   color: var(--text);
@@ -203,6 +208,8 @@ body::after {
 .select:focus { border-color: var(--accent); }
 
 .add-btn {
+  margin-bottom: 8px;
+  flex-shrink: 0;
   padding: 9px 18px;
   font-size: 14px;
   font-weight: 600;
@@ -232,9 +239,10 @@ body::after {
   letter-spacing: 0.05em;
 }
 
-.sort-group { display: flex; gap: 4px; }
+.sort-group { display: flex; }
 
 .sort-btn {
+  margin-right: 4px;
   padding: 5px 11px;
   font-size: 12px;
   color: var(--text-secondary);
@@ -257,14 +265,13 @@ body::after {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .task {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  margin-bottom: 8px;
   padding: 13px 14px;
   background: linear-gradient(180deg, #16161c, #121217);
   border: 1px solid var(--border);
@@ -287,6 +294,7 @@ body::after {
 /* 勾选框 */
 .check {
   flex: none;
+  margin-right: 12px;
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -307,7 +315,7 @@ body::after {
 }
 
 /* 任务主体 */
-.task-body { flex: 1; min-width: 0; }
+.task-body { flex: 1; min-width: 0; margin-right: 12px; }
 
 .task-text {
   font-size: 15px;
@@ -322,7 +330,6 @@ body::after {
 .task-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 10px;
   margin-top: 4px;
   font-size: 12px;
   color: var(--text-muted);
@@ -331,10 +338,12 @@ body::after {
 .meta-chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  margin-right: 10px;
+  margin-bottom: 6px;
 }
 
 .pri-dot {
+  margin-right: 4px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -345,6 +354,8 @@ body::after {
 .pri-low { background: var(--blue); }
 
 .cat-tag {
+  margin-right: 10px;
+  margin-bottom: 6px;
   padding: 1px 8px;
   font-size: 11px;
   color: var(--text-secondary);
@@ -359,11 +370,11 @@ body::after {
 .task-actions {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   flex: none;
 }
 
 .move-btn, .del-btn {
+  margin-bottom: 4px;
   width: 26px;
   height: 26px;
   display: grid;
@@ -387,13 +398,13 @@ body::after {
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
   padding: 64px 0;
   color: var(--text-muted);
 }
 .empty.show { display: flex; }
 
 .empty-mark {
+  margin-bottom: 12px;
   width: 44px;
   height: 44px;
   display: grid;
@@ -421,7 +432,6 @@ body::after {
 .progress {
   display: flex;
   align-items: center;
-  gap: 10px;
   margin-bottom: 18px;
 }
 .progress-track {
@@ -439,6 +449,7 @@ body::after {
   transition: width 0.4s var(--ease);
 }
 .progress-text {
+  margin-left: 10px;
   font-size: 12px;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
