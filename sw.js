@@ -1,4 +1,4 @@
-/* 寰呭姙 PWA 绂荤嚎缂撳瓨 - Service Worker */
+/* 待办 PWA 离线缓存 - Service Worker */
 var CACHE_NAME = 'todo-app-v1';
 
 var ASSETS = [
@@ -12,7 +12,8 @@ var ASSETS = [
   './apple-touch-icon.png'
 ];
 
-// 瀹夎锛氶缂撳瓨鎵€鏈夐潤鎬佽祫婧?self.addEventListener('install', function (event) {
+// 安装：预缓存所有静态资源
+self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function (cache) { return cache.addAll(ASSETS); })
@@ -20,7 +21,7 @@ var ASSETS = [
   );
 });
 
-// 婵€娲伙細娓呯悊鏃х紦瀛樺苟绔嬪嵆鎺ョ椤甸潰
+// 激活：清理旧缓存并立即接管页面
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys()
@@ -34,7 +35,7 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-// 璇锋眰锛氱紦瀛樹紭鍏堬紝绂荤嚎涔熻兘鎵撳紑
+// 请求：缓存优先，离线也能打开
 self.addEventListener('fetch', function (event) {
   if (event.request.method !== 'GET') return;
 
@@ -44,7 +45,7 @@ self.addEventListener('fetch', function (event) {
 
       return fetch(event.request)
         .then(function (response) {
-          // 鍙紦瀛樺悓婧愮殑鎴愬姛鍝嶅簲
+          // 只缓存同源的成功响应
           if (response && response.status === 200) {
             var clone = response.clone();
             caches.open(CACHE_NAME).then(function (cache) {
@@ -54,7 +55,8 @@ self.addEventListener('fetch', function (event) {
           return response;
         })
         .catch(function () {
-          // 瀵艰埅璇锋眰绂荤嚎鏃跺洖閫€鍒伴椤?          if (event.request.mode === 'navigate') {
+          // 导航请求离线时回退到首页
+          if (event.request.mode === 'navigate') {
             return caches.match('./index.html');
           }
         });
