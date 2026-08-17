@@ -52,16 +52,22 @@
   }
 
   // ---------- 工具 ----------
+  // 把 'YYYY-MM-DD' 按本地时区解析，避免 new Date(字符串) 的时区歧义导致日期偏移
+  function parseLocalDate(iso) {
+    var p = iso.split('-');
+    return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+  }
+
   function fmtDate(iso) {
     if (!iso) return '';
-    var d = new Date(iso + 'T00:00:00');
+    var d = parseLocalDate(iso);
     return (d.getMonth() + 1) + '月' + d.getDate() + '日';
   }
 
   function dueStatus(iso) {
     if (!iso) return { text: '', cls: '' };
     var today = startOfDay(new Date());
-    var due = startOfDay(new Date(iso + 'T00:00:00'));
+    var due = startOfDay(parseLocalDate(iso));
     var diff = Math.round((due - today) / 86400000);
     if (diff < 0) return { text: '已过期 · ' + fmtDate(iso), cls: 'due-overdue' };
     if (diff === 0) return { text: '今天截止', cls: 'due-today' };
