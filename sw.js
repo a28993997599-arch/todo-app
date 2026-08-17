@@ -1,5 +1,5 @@
 /* 待办 PWA 离线缓存 - Service Worker */
-var CACHE_NAME = 'todo-app-v5';
+var CACHE_NAME = 'todo-app-v6';
 
 var ASSETS = [
   './',
