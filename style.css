@@ -201,6 +201,20 @@ body {
 }
 .select:focus { border-color: var(--accent); }
 
+.field-date {
+  flex-basis: 100%;
+  margin-right: 0;
+}
+
+.date-selects {
+  display: flex;
+  gap: 8px;
+}
+
+.date-selects .select {
+  flex: 1;
+}
+
 .add-btn {
   margin-bottom: 8px;
   flex-shrink: 0;
