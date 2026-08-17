@@ -24,7 +24,9 @@
     form: document.getElementById('add-form'),
     input: document.getElementById('add-input'),
     addPriority: document.getElementById('add-priority'),
-    addDate: document.getElementById('add-date'),
+    addDateYear: document.getElementById('add-date-year'),
+    addDateMonth: document.getElementById('add-date-month'),
+    addDateDay: document.getElementById('add-date-day'),
     addCategory: document.getElementById('add-category'),
     dateLabel: document.getElementById('date-label'),
     countLabel: document.getElementById('count-label'),
@@ -77,6 +79,79 @@
 
   function startOfDay(d) {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+
+  function pad2(n) {
+    return n < 10 ? '0' + n : String(n);
+  }
+
+  function daysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function initDateSelects() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var i, opt;
+
+    for (i = 0; i <= 3; i++) {
+      opt = document.createElement('option');
+      opt.value = String(y + i);
+      opt.textContent = (y + i) + '年';
+      els.addDateYear.appendChild(opt);
+    }
+    els.addDateYear.value = String(y);
+
+    opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = '月';
+    els.addDateMonth.appendChild(opt);
+    for (i = 1; i <= 12; i++) {
+      opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = i + '月';
+      els.addDateMonth.appendChild(opt);
+    }
+
+    updateDayOptions();
+  }
+
+  function updateDayOptions() {
+    var y = parseInt(els.addDateYear.value, 10);
+    var m = parseInt(els.addDateMonth.value, 10);
+    var prev = els.addDateDay.value;
+    var i, opt;
+
+    els.addDateDay.innerHTML = '';
+    opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = '日';
+    els.addDateDay.appendChild(opt);
+
+    if (!m) return;
+
+    var n = daysInMonth(y, m);
+    for (i = 1; i <= n; i++) {
+      opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = i + '日';
+      els.addDateDay.appendChild(opt);
+    }
+    if (prev && parseInt(prev, 10) <= n) els.addDateDay.value = prev;
+  }
+
+  function getSelectedDate() {
+    var y = els.addDateYear.value;
+    var m = els.addDateMonth.value;
+    var d = els.addDateDay.value;
+    if (!y || !m || !d) return '';
+    return y + '-' + pad2(parseInt(m, 10)) + '-' + pad2(parseInt(d, 10));
+  }
+
+  function resetDateSelects() {
+    els.addDateMonth.value = '';
+    els.addDateDay.value = '';
+    updateDayOptions();
   }
 
   // ---------- 渲染 ----------
@@ -382,9 +457,9 @@
     e.preventDefault();
     var text = els.input.value.trim();
     if (!text) return;
-    add(text, els.addPriority.value, els.addDate.value, els.addCategory.value);
+    add(text, els.addPriority.value, getSelectedDate(), els.addCategory.value);
     els.input.value = '';
-    els.addDate.value = '';
+    resetDateSelects();
     els.input.focus();
   });
 
@@ -413,6 +488,11 @@
     opt.textContent = c;
     els.addCategory.appendChild(opt);
   });
+
+  // 初始化截止日期选择（年/月/日下拉，绕开原生日期选择器异常）
+  els.addDateYear.addEventListener('change', updateDayOptions);
+  els.addDateMonth.addEventListener('change', updateDayOptions);
+  initDateSelects();
 
   render();
 })();
