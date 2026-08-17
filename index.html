@@ -42,14 +42,18 @@
           </select>
         </label>
         <label class="field">
-          <span class="field-label">截止</span>
-          <input type="date" id="add-date" class="select">
-        </label>
-        <label class="field">
           <span class="field-label">分类</span>
           <select id="add-category" class="select"></select>
         </label>
         <button type="submit" class="add-btn">添加</button>
+        <label class="field field-date">
+          <span class="field-label">截止</span>
+          <div class="date-selects">
+            <select id="add-date-year" class="select" aria-label="年"></select>
+            <select id="add-date-month" class="select" aria-label="月"></select>
+            <select id="add-date-day" class="select" aria-label="日"></select>
+          </div>
+        </label>
       </div>
     </form>
 
